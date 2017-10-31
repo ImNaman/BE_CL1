@@ -1,0 +1,408 @@
+State 7 conflicts: 4 shift/reduce
+State 31 conflicts: 4 shift/reduce
+State 32 conflicts: 1 reduce/reduce
+
+
+Grammar
+
+    0 $accept: St $end
+
+    1 St: S MAIN STARTB stmts ENDB
+
+    2 S: HEADER S
+    3  | HEADER
+
+    4 stmts: stmt
+    5      | stmts stmt
+    6      | %empty
+
+    7 stmt: expr
+    8     | DTYPE varlist ENDS
+    9     | FUNC ENDS
+   10     | IFC OPB CLB STARTB stmts ENDB
+
+   11 varlist: VAR
+   12        | varlist SEP VAR
+
+   13 expr: VAR EQ dv opn ENDS
+
+   14 opn: OP dv
+   15    | OP dv opn
+   16    | %empty
+
+   17 dv: DIGIT
+   18   | VAR
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+DIGIT (258) 17
+VAR (259) 11 12 13 18
+HEADER (260) 2 3
+MAIN (261) 1
+STARTB (262) 1 10
+ENDB (263) 1 10
+ENDS (264) 8 9 13
+DTYPE (265) 8
+SEP (266) 12
+FUNC (267) 9
+OP (268) 14 15
+EQ (269) 13
+IFC (270) 10
+OPB (271) 10
+CLB (272) 10
+
+
+Nonterminals, with rules where they appear
+
+$accept (18)
+    on left: 0
+St (19)
+    on left: 1, on right: 0
+S (20)
+    on left: 2 3, on right: 1 2
+stmts (21)
+    on left: 4 5 6, on right: 1 5 10
+stmt (22)
+    on left: 7 8 9 10, on right: 4 5
+varlist (23)
+    on left: 11 12, on right: 8 12
+expr (24)
+    on left: 13, on right: 7
+opn (25)
+    on left: 14 15 16, on right: 13 15
+dv (26)
+    on left: 17 18, on right: 13 14 15
+
+
+State 0
+
+    0 $accept: . St $end
+
+    HEADER  shift, and go to state 1
+
+    St  go to state 2
+    S   go to state 3
+
+
+State 1
+
+    2 S: HEADER . S
+    3  | HEADER .
+
+    HEADER  shift, and go to state 1
+
+    $default  reduce using rule 3 (S)
+
+    S  go to state 4
+
+
+State 2
+
+    0 $accept: St . $end
+
+    $end  shift, and go to state 5
+
+
+State 3
+
+    1 St: S . MAIN STARTB stmts ENDB
+
+    MAIN  shift, and go to state 6
+
+
+State 4
+
+    2 S: HEADER S .
+
+    $default  reduce using rule 2 (S)
+
+
+State 5
+
+    0 $accept: St $end .
+
+    $default  accept
+
+
+State 6
+
+    1 St: S MAIN . STARTB stmts ENDB
+
+    STARTB  shift, and go to state 7
+
+
+State 7
+
+    1 St: S MAIN STARTB . stmts ENDB
+
+    VAR    shift, and go to state 8
+    DTYPE  shift, and go to state 9
+    FUNC   shift, and go to state 10
+    IFC    shift, and go to state 11
+
+    VAR       [reduce using rule 6 (stmts)]
+    DTYPE     [reduce using rule 6 (stmts)]
+    FUNC      [reduce using rule 6 (stmts)]
+    IFC       [reduce using rule 6 (stmts)]
+    $default  reduce using rule 6 (stmts)
+
+    stmts  go to state 12
+    stmt   go to state 13
+    expr   go to state 14
+
+
+State 8
+
+   13 expr: VAR . EQ dv opn ENDS
+
+    EQ  shift, and go to state 15
+
+
+State 9
+
+    8 stmt: DTYPE . varlist ENDS
+
+    VAR  shift, and go to state 16
+
+    varlist  go to state 17
+
+
+State 10
+
+    9 stmt: FUNC . ENDS
+
+    ENDS  shift, and go to state 18
+
+
+State 11
+
+   10 stmt: IFC . OPB CLB STARTB stmts ENDB
+
+    OPB  shift, and go to state 19
+
+
+State 12
+
+    1 St: S MAIN STARTB stmts . ENDB
+    5 stmts: stmts . stmt
+
+    VAR    shift, and go to state 8
+    ENDB   shift, and go to state 20
+    DTYPE  shift, and go to state 9
+    FUNC   shift, and go to state 10
+    IFC    shift, and go to state 11
+
+    stmt  go to state 21
+    expr  go to state 14
+
+
+State 13
+
+    4 stmts: stmt .
+
+    $default  reduce using rule 4 (stmts)
+
+
+State 14
+
+    7 stmt: expr .
+
+    $default  reduce using rule 7 (stmt)
+
+
+State 15
+
+   13 expr: VAR EQ . dv opn ENDS
+
+    DIGIT  shift, and go to state 22
+    VAR    shift, and go to state 23
+
+    dv  go to state 24
+
+
+State 16
+
+   11 varlist: VAR .
+
+    $default  reduce using rule 11 (varlist)
+
+
+State 17
+
+    8 stmt: DTYPE varlist . ENDS
+   12 varlist: varlist . SEP VAR
+
+    ENDS  shift, and go to state 25
+    SEP   shift, and go to state 26
+
+
+State 18
+
+    9 stmt: FUNC ENDS .
+
+    $default  reduce using rule 9 (stmt)
+
+
+State 19
+
+   10 stmt: IFC OPB . CLB STARTB stmts ENDB
+
+    CLB  shift, and go to state 27
+
+
+State 20
+
+    1 St: S MAIN STARTB stmts ENDB .
+
+    $default  reduce using rule 1 (St)
+
+
+State 21
+
+    5 stmts: stmts stmt .
+
+    $default  reduce using rule 5 (stmts)
+
+
+State 22
+
+   17 dv: DIGIT .
+
+    $default  reduce using rule 17 (dv)
+
+
+State 23
+
+   18 dv: VAR .
+
+    $default  reduce using rule 18 (dv)
+
+
+State 24
+
+   13 expr: VAR EQ dv . opn ENDS
+
+    OP  shift, and go to state 28
+
+    $default  reduce using rule 16 (opn)
+
+    opn  go to state 29
+
+
+State 25
+
+    8 stmt: DTYPE varlist ENDS .
+
+    $default  reduce using rule 8 (stmt)
+
+
+State 26
+
+   12 varlist: varlist SEP . VAR
+
+    VAR  shift, and go to state 30
+
+
+State 27
+
+   10 stmt: IFC OPB CLB . STARTB stmts ENDB
+
+    STARTB  shift, and go to state 31
+
+
+State 28
+
+   14 opn: OP . dv
+   15    | OP . dv opn
+
+    DIGIT  shift, and go to state 22
+    VAR    shift, and go to state 23
+
+    dv  go to state 32
+
+
+State 29
+
+   13 expr: VAR EQ dv opn . ENDS
+
+    ENDS  shift, and go to state 33
+
+
+State 30
+
+   12 varlist: varlist SEP VAR .
+
+    $default  reduce using rule 12 (varlist)
+
+
+State 31
+
+   10 stmt: IFC OPB CLB STARTB . stmts ENDB
+
+    VAR    shift, and go to state 8
+    DTYPE  shift, and go to state 9
+    FUNC   shift, and go to state 10
+    IFC    shift, and go to state 11
+
+    VAR       [reduce using rule 6 (stmts)]
+    DTYPE     [reduce using rule 6 (stmts)]
+    FUNC      [reduce using rule 6 (stmts)]
+    IFC       [reduce using rule 6 (stmts)]
+    $default  reduce using rule 6 (stmts)
+
+    stmts  go to state 34
+    stmt   go to state 13
+    expr   go to state 14
+
+
+State 32
+
+   14 opn: OP dv .
+   15    | OP dv . opn
+
+    OP  shift, and go to state 28
+
+    ENDS      reduce using rule 14 (opn)
+    ENDS      [reduce using rule 16 (opn)]
+    $default  reduce using rule 14 (opn)
+
+    opn  go to state 35
+
+
+State 33
+
+   13 expr: VAR EQ dv opn ENDS .
+
+    $default  reduce using rule 13 (expr)
+
+
+State 34
+
+    5 stmts: stmts . stmt
+   10 stmt: IFC OPB CLB STARTB stmts . ENDB
+
+    VAR    shift, and go to state 8
+    ENDB   shift, and go to state 36
+    DTYPE  shift, and go to state 9
+    FUNC   shift, and go to state 10
+    IFC    shift, and go to state 11
+
+    stmt  go to state 21
+    expr  go to state 14
+
+
+State 35
+
+   15 opn: OP dv opn .
+
+    $default  reduce using rule 15 (opn)
+
+
+State 36
+
+   10 stmt: IFC OPB CLB STARTB stmts ENDB .
+
+    $default  reduce using rule 10 (stmt)
